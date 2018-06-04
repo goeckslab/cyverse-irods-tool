@@ -33,13 +33,16 @@ dataset_dir = args.remotedestination.split(',')[0] + "_files/"
 ucsc_specific = dataset_dir + "hub.txt"
 jbrowse_specific = dataset_dir + "json/trackList.json"
 local = ""
+hubtype=None
 if path.isfile(ucsc_specific):
     local = ucsc_specific
-    
+    hubtype="UCSC"
 elif path.isfile(jbrowse_specific):
     local = jbrowse_specific
+    hubtype = "JBROWSE"
 else:
     raise OSError("Neither '{}' nor '{}' found.".format(ucsc_specific, jbrowse_specific))
 
 # generate link
+
 # generate HTML file

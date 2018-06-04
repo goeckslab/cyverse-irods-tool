@@ -1,6 +1,6 @@
 <tool id="cyverse_irods" name="CyVerse interaction via iRODS" version="0.1.0">
     <description>
-        This Galaxy tool is used to upload files to the CyVerse data store
+        This Galaxy tool is used to upload files to G-OnRamp's Data Commons store on CyVerse
     </description>
     <requirements>
         <requirement type="package" version="0.7.0">python-irodsclient</requirement>
@@ -10,9 +10,9 @@
         <exit_code range="1:" />
     </stdio>
     <command><![CDATA[
-        python $__tool_directory__/CyRODS.py --upload --localsource $data_to_upload
-        #if $user_or_shared == "share"
-        --remotedestination "/iplant/home/shared"
+        python $__tool_directory__/CyRODS.py --upload --localsource $data_to_upload --remotedestination "/iplant/home/shared/G-OnRamp_hubs/community/"
+        #if $timestamp == "y":
+          --timestamp
         #end if
     ]]></command>
     <inputs>
@@ -22,15 +22,19 @@
             format="jbrowsehub,trackhub"
             label="Data to upload"
         />
-        <param name="user_or_shared" type="select" label="Select User or Shared (Community) Store">
+<!--       <param name="user_or_shared" type="select" label="Select User or Shared (Community) Store">
             <option value="user">User Store</option>
             <option value="share">Shared Store</option>
-        </param>
+        </param> 
+-->
         <param
             name="destpath"
             type="text"
             label="Subdirectory to install to"
         />
+        <param name="timestamp" type="select" label="Place Timestamp in directory name" display="checkboxes">
+          <option value="y">Timestamp Directory</option>
+        </param>
         <param
             name="user"
             type="text"
