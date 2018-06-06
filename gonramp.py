@@ -10,7 +10,7 @@ ap.add_argument("--localsource")
 ap.add_argument("--remotedestination")
 ap.add_argument("--user")
 ap.add_argument("--password")
-ap.add_argument("--timestamp", action-"store_true")
+ap.add_argument("--timestamp", action="store_true")
 
 data_c_path = "/iplant/home/shared/G-OnRamp_hubs/community/"
 
@@ -41,6 +41,9 @@ if args.upload:
     else:
         args.remotedestination = conn.user_dir if not args.remotedestination else args.remotedestination
         conn.recursive_upload(args.localsource, args.remotedestination)
+
+if args.output:
+    print(args.output)
 
 dataset_dir = args.remotedestination.split(',')[0] + "_files/"
 # UCSC has a "hub.txt"

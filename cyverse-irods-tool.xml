@@ -14,6 +14,8 @@
         #if $timestamp == "y":
           --timestamp
         #end if
+        --user $user --password $pass
+        --output $output
     ]]></command>
     <inputs>
         <param
@@ -25,7 +27,7 @@
 <!--       <param name="user_or_shared" type="select" label="Select User or Shared (Community) Store">
             <option value="user">User Store</option>
             <option value="share">Shared Store</option>
-        </param> 
+        </param>
 -->
         <param
             name="destpath"
