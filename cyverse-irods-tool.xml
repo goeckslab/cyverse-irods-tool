@@ -41,8 +41,9 @@
                 </valid>
             </sanitizer>
         </param>
-        <param name="timestamp" type="select" label="Place Timestamp in directory name for uniqueness? (ex: aName_20180604T212729)" display="checkboxes">
+        <param name="timestamp" type="select" label="Place Timestamp in directory name for uniqueness? (ex: aName_20180604T212729)" display="radiobutton" multiple="false">
           <option value="y">Timestamp Directory</option>
+          <option value="n">Don't Timestamp Directory</option>
         </param>
         <param
             name="user"
@@ -55,6 +56,11 @@
             label="CyVerse user password"
         />
     </inputs>
+
+    <outputs>
+        <data format="html" name="hublink" label="${tool.name}" />
+    </outputs>
+
     <help>
 .. class:: infomark
 
