@@ -12,6 +12,8 @@ ap.add_argument("--user")
 ap.add_argument("--password")
 ap.add_argument("--timestamp", action-"store_true")
 
+data_c_path = "/iplant/home/shared/G-OnRamp_hubs/community/"
+
 args = ap.parse_args()
 
 kwargs = {}
@@ -26,9 +28,11 @@ conn = CyVerseiRODS(**kwargs)
 if args.timestamp or not args.remotedestination:
     timestamp = datetime.utcnow().strftime("_%y%m%dT%H%M%S")
     if not args.remotedestination:
-        args.remotedestination = "myHub" + timestamp
+        args.remotedestination = args.user + timestamp
     else:
-        remotedestination = remotedestination + timestamp
+        args.remotedestination = args.remotedestination + timestamp
+
+
 
 # upload
 if args.upload:

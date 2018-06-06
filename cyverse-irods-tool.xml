@@ -10,7 +10,7 @@
         <exit_code range="1:" />
     </stdio>
     <command><![CDATA[
-        python $__tool_directory__/CyRODS.py --upload --localsource $data_to_upload --remotedestination "/iplant/home/shared/G-OnRamp_hubs/community/$destpath"
+        python $__tool_directory__/CyRODS.py --upload --localsource $data_to_upload --remotedestination "$destpath"
         #if $timestamp == "y":
           --timestamp
         #end if
@@ -31,6 +31,7 @@
             name="destpath"
             type="text"
             label="Subdirectory to install to - descriptive is good"
+            optional="true"
         >
             <sanitizer invalid_char="">
                 <valid initial="string.ascii_letters,string.digits">
@@ -68,6 +69,6 @@ this will upload your hub to your CyVerse account, making it available to visual
 
 .. class:: warningmark
 
-*1: while optional, a descriptive name is best, as the default will be 'myHub' with a timestamp.*
+*1: while optional, a descriptive name is best, as the default will be '[your username]_hub' with a timestamp.*
     </help>
 </tool>
