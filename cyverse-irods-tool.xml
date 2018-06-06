@@ -15,7 +15,7 @@
           --timestamp
         #end if
         --user $user --password $pass
-        --output $output
+        --output $hublink
     ]]></command>
     <inputs>
         <param
