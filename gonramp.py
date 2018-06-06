@@ -42,8 +42,11 @@ if args.upload:
         args.remotedestination = conn.user_dir if not args.remotedestination else args.remotedestination
         conn.recursive_upload(args.localsource, args.remotedestination)
 
+# this is the location of the file to write the url to
 if args.output:
-    print(args.output)
+    html_content = gen_html()
+    with open(args.output, "w") as file:
+        file.write(html_content)
 
 dataset_dir = args.remotedestination.split(',')[0] + "_files/"
 # UCSC has a "hub.txt"
