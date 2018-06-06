@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 from CyRODS import CyVerseiRODS
+
+from datetime import datetime
 from os import path
 
 ap = argparse.ArgumentParser(description="CyVerse/iRODS interaction")
@@ -8,6 +10,7 @@ ap.add_argument("--localsource")
 ap.add_argument("--remotedestination")
 ap.add_argument("--user")
 ap.add_argument("--password")
+ap.add_argument("--timestamp", action-"store_true")
 
 args = ap.parse_args()
 
@@ -18,6 +21,14 @@ if args.user and args.password:
 
 # initialize connection
 conn = CyVerseiRODS(**kwargs)
+
+# generate timestamp, if relevant
+if args.timestamp or not args.remotedestination:
+    timestamp = datetime.utcnow().strftime("_%y%m%dT%H%M%S")
+    if not args.remotedestination:
+        args.remotedestination = "myHub" + timestamp
+    else:
+        remotedestination = remotedestination + timestamp
 
 # upload
 if args.upload:
