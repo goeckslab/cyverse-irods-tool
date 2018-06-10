@@ -12,10 +12,9 @@ ap.add_argument("--remotedestination")
 ap.add_argument("--user")
 ap.add_argument("--password")
 ap.add_argument("--timestamp", action="store_true")
+ap.add_argument("--output")
 
 anon_prefix = "https://de.cyverse.org/anon-files/"
-
-
 
 args = ap.parse_args()
 
@@ -30,7 +29,7 @@ conn = CyVerseiRODS(**kwargs)
 default_perm = {
   "type" : "write",
   "name" : "anonymous",
-  "zone" : CyRODS.KWARGS["zone"]
+  "zone" : conn.KWARGS["zone"]
 }
 
 
@@ -38,27 +37,22 @@ default_perm = {
 if args.timestamp or not args.remotedestination:
     timestamp = datetime.utcnow().strftime("_%y%m%dT%H%M%S")
     if not args.remotedestination:
-        args.remotedestination = args.user + timestamp
+        args.remotedestination = args.user + "_hub" + timestamp
     else:
         args.remotedestination = args.remotedestination + timestamp
 
-
+args.remotedestination = conn.user_dir + "/" + args.remotedestination
 
 # upload
 if args.upload:
     if args.localsource is None:
         parser.error("--upload requires --localsource, --remotedestination is optional")
     else:
-        args.remotedestination = conn.user_dir if not args.remotedestination else args.remotedestination
+        args.localsource = ".".join(args.localsource.split('.')[:-1]) + "_files/"
+        print("this is where i'd run: conn.recursive_upload(args.localsource, args.remotedestination, default_perm)\n{}\n{}\n{}\n\n".format(args.localsource, args.remotedestination, default_perm))
+        exit()
         conn.recursive_upload(args.localsource, args.remotedestination, default_perm)
 
-# this is the location of the file to write the url to
-if args.output:
-    html_content = gen_html()
-    with open(args.output, "w") as file:
-        file.write(html_content)
-
-dataset_dir = args.remotedestination.split(',')[0] + "_files/"
 # UCSC has a "hub.txt"
 # JBrowse has a "json/trackList.json"
 ucsc_specific = dataset_dir + "hub.txt"
@@ -80,7 +74,7 @@ else:
 url.format(data_url)
 
 # generate link
-html = '''
+html_content = '''
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -93,7 +87,8 @@ html = '''
 </html>
 '''.format(title, header, url)
 
-
-
-
 # generate HTML file
+if args.output:
+    with open(args.output, "w") as file:
+        file.write(html_content)
+

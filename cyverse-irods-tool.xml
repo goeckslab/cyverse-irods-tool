@@ -10,7 +10,7 @@
         <exit_code range="1:" />
     </stdio>
     <command><![CDATA[
-        python $__tool_directory__/CyRODS.py --upload --localsource $data_to_upload --remotedestination "$destpath"
+        python $__tool_directory__/gonramp.py --upload --localsource $data_to_upload --remotedestination "$destpath"
         #if $timestamp == "y":
           --timestamp
         #end if
