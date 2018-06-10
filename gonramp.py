@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-from .cyverse-irods/CyRODS import CyVerseiRODS
+from cyverse_irods.CyRODS import CyVerseiRODS
 
 from datetime import datetime
 from os import path
+import argparse
 
 ap = argparse.ArgumentParser(description="CyVerse/iRODS interaction")
 ap.add_argument("--upload", action='store_true')
