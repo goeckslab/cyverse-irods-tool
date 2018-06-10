@@ -41,6 +41,8 @@ if args.timestamp or not args.remotedestination:
     else:
         args.remotedestination = args.remotedestination + timestamp
 
+remote_subdir = args.remotedestination
+
 args.remotedestination = conn.user_dir + "/" + args.remotedestination
 
 # upload
@@ -55,22 +57,26 @@ if args.upload:
 
 # UCSC has a "hub.txt"
 # JBrowse has a "json/trackList.json"
-ucsc_specific = dataset_dir + "hub.txt"
-jbrowse_specific = dataset_dir + "json"
+ucsc_specific = remote_subdir + "/hub.txt"
+jbrowse_specific = remote_subdir + "/json"
 local = ""
-url = ""
+data_url = anon_prefix + kwargs["user"] + "/"
 hubtype=None
+title=""
+header="Link to generated {} hub:"
+
 if path.isfile(ucsc_specific):
-    local = ucsc_specific
+    data_url = data_url + ucsc_specific
     hubtype="UCSC"
     url="http://genome.ucsc.edu/cgi-bin/hgHubConnect?hgHub_do_redirect=on&hgHubConnect.remakeTrackHub=on&hgHub_do_firstDb=1&hubClear={}"
 elif path.isfile(jbrowse_specific):
-    local = jbrowse_specific
+    data_url = data_url + jbrowse_specific
     url="https://de.cyverse.org/anon-files/iplant/home/shared/G-OnRamp_hubs/JBrowse-1.12.3/index.html?data={}"
-    hubtype = "JBROWSE"
+    hubtype = "JBrowse"
 else:
     raise OSError("Neither '{}' nor '{}' found.".format(ucsc_specific, jbrowse_specific))
 
+header.format(hubtype)
 url.format(data_url)
 
 # generate link
@@ -82,13 +88,12 @@ html_content = '''
   </head>
   <body>
     <h1>{}</h1>
-    <a href="{}">Generated Hub</a>
+    <a href="{}">Generated Hub at {}</a>
   </body>
 </html>
-'''.format(title, header, url)
+'''.format(title, header, url, kwargs["user"] + "/" + remote_subdir)
 
 # generate HTML file
 if args.output:
     with open(args.output, "w") as file:
         file.write(html_content)
-
