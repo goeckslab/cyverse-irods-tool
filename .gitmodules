@@ -1,0 +1,3 @@
+[submodule "cyverse-irods"]
+	path = cyverse-irods
+	url = https://github.com/goeckslab/cyverse-irods
