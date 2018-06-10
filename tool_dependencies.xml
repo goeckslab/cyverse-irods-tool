@@ -1,14 +1,18 @@
 <?xml version="1.0"?>
 <tool_dependency>
-    <package name="samtools" version="1.2">
-        <repository name="python-irodsclient" owner="iuc" prior_installation_required="True"/>
+    <package name="python-irodsclient" version="1.2">
     </package>
     <package name="cyverse-irods" version="0.0.0">
-        <readme>derp</readme>
+        <readme></readme>
         <install version="1.0">
-            <actions>
-                <action type="download_by_url">https://github.com/goeckslab/cyverse-irods/archive/master.zip</action>
-            </actions>
+            <actions_group>
+                <actions>
+                    <action type="download_by_url" target_filename="CyRODS.zip" >https://github.com/goeckslab/cyverse-irods/archive/master.zip</action>
+                    <action type="set_environment">
+                        <environment_variable action="append_to" name="PYTHONPATH">$INSTALL_DIR/CyRODS/</environment_variable>
+                    </action>
+                </actions>
+            </actions_group>
         </install>
     </package>
 </tool_dependency>
