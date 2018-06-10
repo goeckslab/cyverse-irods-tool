@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from CyRODS import CyVerseiRODS
+from .cyverse-irods/CyRODS import CyVerseiRODS
 
 from datetime import datetime
 from os import path
