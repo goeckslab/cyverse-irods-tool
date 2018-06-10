@@ -57,8 +57,9 @@ header="Link to generated {} hub:"
 args.localsource = ".".join(args.localsource.split('.')[:-1]) + "_files/"
 
 # ensure we have a valid archive
-if path.isfile(args.localsource + "hub.txt"):
+if path.isfile(args.localsource + "myHub/hub.txt"):
     data_url = data_url + ucsc_specific
+    args.localsource = args.localsource + "myHub/"
     hubtype="UCSC"
     url="http://genome.ucsc.edu/cgi-bin/hgHubConnect?hgHub_do_redirect=on&hgHubConnect.remakeTrackHub=on&hgHub_do_firstDb=1&hubClear={}"
 elif path.isfile(args.localsource + "myHub/trackList.json"):
@@ -67,7 +68,7 @@ elif path.isfile(args.localsource + "myHub/trackList.json"):
     url="https://de.cyverse.org/anon-files/iplant/home/shared/G-OnRamp_hubs/JBrowse-1.12.3/index.html?data={}"
     hubtype = "JBrowse"
 else:
-    raise OSError("Neither '{}' nor '{}' found.".format(args.localsource + "hub.txt", args.localsource + "myHub/trackList.json"))
+    raise OSError("Neither '{}' nor '{}' found.".format(args.localsource + "myHub/hub.txt", args.localsource + "myHub/trackList.json"))
 
 # upload
 if args.upload:
