@@ -4,7 +4,6 @@
     </description>
     <requirements>
         <requirement type="package" version="0.7.0">python-irodsclient</requirement>
-        <requirement type="package">cyverse-irods</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" />
@@ -24,11 +23,6 @@
             format="jbrowsehub,trackhub"
             label="Data to upload"
         />
-<!--       <param name="user_or_shared" type="select" label="Select User or Shared (Community) Store">
-            <option value="user">User Store</option>
-            <option value="share">Shared Store</option>
-        </param>
--->
         <param
             name="destpath"
             type="text"

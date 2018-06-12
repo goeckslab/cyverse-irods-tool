@@ -2,17 +2,4 @@
 <tool_dependency>
     <package name="python-irodsclient" version="1.2">
     </package>
-    <package name="cyverse-irods" version="0.0.0">
-        <readme></readme>
-        <install version="1.0">
-            <actions_group>
-                <actions>
-                    <action type="download_by_url" target_filename="CyRODS.zip" >https://github.com/goeckslab/cyverse-irods/archive/master.zip</action>
-                    <action type="set_environment">
-                        <environment_variable action="append_to" name="PYTHONPATH">$INSTALL_DIR/CyRODS/</environment_variable>
-                    </action>
-                </actions>
-            </actions_group>
-        </install>
-    </package>
 </tool_dependency>
