@@ -67,6 +67,8 @@ elif path.isfile(args.localsource + "myHub/trackList.json"):
     data_url = data_url + jbrowse_specific
     url="https://de.cyverse.org/anon-files/iplant/home/shared/G-OnRamp_hubs/JBrowse-1.12.3/index.html?data={}"
     hubtype = "JBrowse"
+elif path.isfile(args.localsource + "myHub":
+    raise OSError("ERROR: myHub is a file, suggesting that this is an imported history, which does not work with G-OnRamp archive creators")
 else:
     raise OSError("Neither '{}' nor '{}' found.".format(args.localsource + "myHub/hub.txt", args.localsource + "myHub/trackList.json"))
 
