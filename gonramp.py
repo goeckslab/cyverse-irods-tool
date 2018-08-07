@@ -2,7 +2,7 @@
 from cyverse_irods.CyRODS import CyVerseiRODS
 
 from datetime import datetime
-from os import path
+from os import path, walk
 import argparse
 
 ap = argparse.ArgumentParser(description="CyVerse/iRODS interaction")
@@ -53,6 +53,8 @@ hubtype=""
 title=""
 header="Link to generated {} hub:"
 
+filesize = 0
+
 # find where the files REALLY live
 args.localsource = ".".join(args.localsource.split('.')[:-1]) + "_files/"
 
@@ -72,13 +74,40 @@ elif path.isfile(args.localsource + "myHub"):
 else:
     raise OSError("Neither '{}' nor '{}' found.".format(args.localsource + "myHub/hub.txt", args.localsource + "myHub/trackList.json"))
 
+# get filesize
+for dirpath, dirnames, filenames in walk(args.localsource):
+    for f in filenames:
+        fpath = path.join(dirpath, f)
+        filesize += path.getsize(fpath)
+
+print("bytes: {}".format(filesize))
+
+sizestring = "<b>{}</b> {}"
+# gigs
+magnitude = 0.0
+unit = ""
+if int(filesize / 1000000000):
+    magnitude = filesize/1000000000
+    unit = "GB"
+elif int(filesize / 1000000):
+    magnitude = filesize/1000000
+    unit = "MB"
+elif int(filesize / 1000):
+    magnitude = filesize/1000
+    unit = "kB"
+else:
+    magnitude = filesize
+    unit = "B"
+
+sizestring = sizestring.format(magnitude, unit)
+
 # upload
 if args.upload:
     if args.localsource is None:
         parser.error("--upload requires --localsource, --remotedestination is optional")
     else:
         print("conn.recursive_upload(args.localsource, args.remotedestination, default_perm)\n{}\n{}\n{}\n\n".format(args.localsource, args.remotedestination, default_perm))
-        conn.recursive_upload(args.localsource, args.remotedestination, default_perm)
+#        conn.recursive_upload(args.localsource, args.remotedestination, default_perm)
 
 header = header.format(hubtype)
 url = url.format(data_url)
@@ -93,10 +122,11 @@ html_content = str('''
   <body>\
     <h1>{}</h1>\
     <a href="{}">Generated Hub at {}</a>\
+    <h3>Hub size:</h3> <span style="color:blue">{}</span>\
   </body>\
 </html>''')
 
 # generate HTML file
 if args.output:
     with open(args.output, "w") as file:
-        file.write(html_content.format(title, header, url, kwargs["user"] + "/" + remote_subdir))
+        file.write(html_content.format(title, header, url, kwargs["user"] + "/" + remote_subdir, sizestring))

@@ -1,6 +1,6 @@
 <tool id="cyverse_irods" name="CyVerse interaction via iRODS" version="0.1.0">
     <description>
-        This Galaxy tool is used to upload files to G-OnRamp's Data Commons store on CyVerse
+        This Galaxy tool is used to upload files to a user's Data Store on CyVerse
     </description>
     <requirements>
         <requirement type="package" version="0.7.0">python-irodsclient</requirement>
