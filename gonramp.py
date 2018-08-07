@@ -107,7 +107,7 @@ if args.upload:
         parser.error("--upload requires --localsource, --remotedestination is optional")
     else:
         print("conn.recursive_upload(args.localsource, args.remotedestination, default_perm)\n{}\n{}\n{}\n\n".format(args.localsource, args.remotedestination, default_perm))
-#        conn.recursive_upload(args.localsource, args.remotedestination, default_perm)
+        conn.recursive_upload(args.localsource, args.remotedestination, default_perm)
 
 header = header.format(hubtype)
 url = url.format(data_url)
